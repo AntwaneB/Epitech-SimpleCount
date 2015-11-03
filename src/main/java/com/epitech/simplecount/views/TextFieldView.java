@@ -7,10 +7,30 @@ import java.util.Observer;
 
 public class TextFieldView extends JTextField implements Observer
 {
-	public TextFieldView()
+	public static class Factory
 	{
-		this.setText("0");
+		public static TextFieldView make(Observable model, GridBagConstraints constraints, int x, int y)
+		{
+			constraints.gridx = x;
+			constraints.gridy = y;
 
+			return (new TextFieldView(model));
+		}
+	}
+
+	private Observable model;
+
+	public TextFieldView(Observable model)
+	{
+		this.model = model;
+		this.model.addObserver(this);
+
+		this.setText(this.model.toString());
+		this.setStyle();
+	}
+
+	private void setStyle()
+	{
 		this.setFont(new Font("Arial", Font.PLAIN, 40));
 		this.setHorizontalAlignment(JTextField.RIGHT);
 		this.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 10, 20, 10));
@@ -20,6 +40,6 @@ public class TextFieldView extends JTextField implements Observer
 
 	public void update(Observable o, Object arg)
 	{
-
+		this.setText(this.model.toString());
 	}
 }
