@@ -12,40 +12,53 @@ public class ButtonView extends JButton implements Observer
 {
 	public static class Factory
 	{
-		public static ButtonView make(String text, Calculator model, int fontSize)
+		public static Color background;
+		public static Color foreground;
+		public static int fontSize;
+		static {
+			Factory.reset();
+		}
+
+		public static ButtonView make(String text, Calculator model)
 		{
-			ButtonView button = new ButtonView(text, fontSize);
+			ButtonView button = new ButtonView(text, Factory.fontSize, Factory.background, Factory.foreground);
 			button.addActionListener(new ButtonController(model));
 
 			return (button);
 		}
-		public static ButtonView make(String text, Calculator model, GridBagConstraints constraints, int x, int y, int fontSize)
+
+		public static ButtonView make(String text, Calculator model, GridBagConstraints constraints, int x, int y)
 		{
 			constraints.gridx = x;
 			constraints.gridy = y;
 
-			ButtonView button = new ButtonView(text, fontSize);
-			button.addActionListener(new ButtonController(model));
+			return (make(text, model));
+		}
 
-			return (button);
+		public static void reset()
+		{
+			Factory.background = new Color(0x292929);
+			Factory.foreground = new Color(0x8e8d9b);
+			Factory.fontSize = 25;
 		}
 	}
 
-	public ButtonView(String text, int fontSize)
+	public ButtonView(String text, int fontSize, Color background, Color foreground)
 	{
 		this.setText(text);
 
-		this.setStyle(fontSize);
+		this.setStyle(fontSize, background, foreground);
 	}
 
-	private void setStyle(int fontSize)
+	private void setStyle(int fontSize, Color background, Color foreground)
 	{
 		// Managing style
 		this.setFont(new Font("Arial", Font.PLAIN, fontSize));
-		this.setBackground(new Color(0x292929));
-		this.setForeground(new Color(0x8e8d9b));
+		this.setBackground(background);
+		this.setForeground(foreground);
 		this.setBorderPainted(false);
 		this.setFocusPainted(false);
+		this.setOpaque(false);
 		super.setContentAreaFilled(false);
 	}
 

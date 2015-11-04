@@ -74,11 +74,13 @@ public class CalculatorView extends JFrame implements Observer
 		gbc.weighty = 0.15;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
+		ButtonView.Factory.background = new Color(0x262626);
 		mainPanel.add(makeButtonPanel("+", this.model, gbc, 3, 1), gbc);
 		mainPanel.add(makeButtonPanel("-", this.model, gbc, 3, 2), gbc);
 		mainPanel.add(makeButtonPanel("*", this.model, gbc, 3, 3), gbc);
 		mainPanel.add(makeButtonPanel("/", this.model, gbc, 3, 4), gbc);
 		mainPanel.add(makeButtonPanel("%", this.model, gbc, 3, 5), gbc);
+		ButtonView.Factory.reset();
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -86,7 +88,9 @@ public class CalculatorView extends JFrame implements Observer
 		gbc.weightx = 0.75;
 		gbc.gridwidth = 3;
 		gbc.gridheight = 1;
+		ButtonView.Factory.background = new Color(0x262626);
 		mainPanel.add(makeFunctionsPanel(), gbc);
+		ButtonView.Factory.reset();
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -106,8 +110,9 @@ public class CalculatorView extends JFrame implements Observer
 		mainPanel.add(makeButtonPanel("2", this.model, gbc, 1, 4), gbc);
 		mainPanel.add(makeButtonPanel("3", this.model, gbc, 2, 4), gbc);
 
+		mainPanel.add(makeButtonPanel(".", this.model, gbc, 2, 5), gbc);
+		gbc.gridwidth = 2;
 		mainPanel.add(makeButtonPanel("0", this.model, gbc, 0, 5), gbc);
-		mainPanel.add(makeButtonPanel(".", this.model, gbc, 1, 5), gbc);
 
 		this.add(mainPanel);
 	}
@@ -135,18 +140,18 @@ public class CalculatorView extends JFrame implements Observer
 	private Component makeFunctionsPanel()
 	{
 		JPanel panel = new JPanel(new GridLayout(2, 4));
-		panel.setOpaque(false);
-		panel.setBackground(new Color(0x212121));
+		panel.setBackground(ButtonView.Factory.background);
 
-		panel.add(ButtonView.Factory.make("<html>x<sup>2</sup></html>", this.model, 12));
-		panel.add(ButtonView.Factory.make("<html>x<sup>3</sup></html>", this.model, 12));
-		panel.add(ButtonView.Factory.make("\u221A", this.model, 12));
-		panel.add(ButtonView.Factory.make("<html>e<sup>x</sup></html>", this.model, 12));
+		ButtonView.Factory.fontSize = 12;
+		panel.add(ButtonView.Factory.make("<html>x<sup>2</sup></html>", this.model));
+		panel.add(ButtonView.Factory.make("<html>x<sup>3</sup></html>", this.model));
+		panel.add(ButtonView.Factory.make("\u221A", this.model));
+		panel.add(ButtonView.Factory.make("<html>e<sup>x</sup></html>", this.model));
 
-		panel.add(ButtonView.Factory.make("cos", this.model, 12));
-		panel.add(ButtonView.Factory.make("sin", this.model, 12));
-		panel.add(ButtonView.Factory.make("tan", this.model, 12));
-		panel.add(ButtonView.Factory.make("log", this.model, 12));
+		panel.add(ButtonView.Factory.make("cos", this.model));
+		panel.add(ButtonView.Factory.make("sin", this.model));
+		panel.add(ButtonView.Factory.make("tan", this.model));
+		panel.add(ButtonView.Factory.make("log", this.model));
 
 		return (panel);
 	}
@@ -164,7 +169,8 @@ public class CalculatorView extends JFrame implements Observer
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 
-		panel.add(ButtonView.Factory.make(text, model, 25), gbc);
+		ButtonView.Factory.fontSize = 25;
+		panel.add(ButtonView.Factory.make(text, model), gbc);
 
 		return (panel);
 	}
