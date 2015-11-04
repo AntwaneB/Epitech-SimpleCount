@@ -59,14 +59,18 @@ public class Number extends AExpressionPart
 		for (Token t: this.tokens)
 			strValue += t.getCharValue();
 
-		strValue = strValue.replaceFirst("^0+0(?!.[0-9]*)", "");
+		strValue = strValue.replaceAll("^0+", "0");
+		strValue = strValue.replaceAll("^0+(?=\\d+)", "");
+
+		if (strValue.length() == 0)
+			strValue = "0";
 
 		return (strValue);
 	}
 
 	public Number epur()
 	{
-		Number number = new Number(new BigDecimal(this.toString()).round(new MathContext(9, RoundingMode.HALF_EVEN)).toString());
+		Number number = new Number(new BigDecimal(this.toString()).round(new MathContext(Settings.asInt("max_decimals") + 1, RoundingMode.HALF_EVEN)).toString());
 
 		if (number.tokens.size() == 1 && number.tokens.get(0).is(Tokens.ZERO))
 			return (this);

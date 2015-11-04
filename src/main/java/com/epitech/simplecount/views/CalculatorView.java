@@ -117,7 +117,7 @@ public class CalculatorView extends JFrame implements Observer
 	private Component makeResultPanel()
 	{
 		JPanel panel = new JPanel(new GridLayout(1, 1));
-		panel.setBackground(new Color(0x1e1e1e));
+		panel.setBackground(new Color(Settings.asInt("result_background", 16)));
 
 		panel.add(TextFieldView.Factory.make(this.model));
 
