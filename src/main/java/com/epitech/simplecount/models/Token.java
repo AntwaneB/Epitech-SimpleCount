@@ -53,6 +53,7 @@ public class Token
 		tokens.put("/", Tokens.DIV);
 		tokens.put("%", Tokens.MOD);
 		tokens.put("=", Tokens.EGAL);
+		tokens.put("\n", Tokens.EGAL);
 
 		tokens.put("<html>x<sup>2</sup></html>", Tokens.SQUARE);
 		tokens.put("<html>x<sup>3</sup></html>", Tokens.CUBE);
@@ -63,7 +64,6 @@ public class Token
 		tokens.put("tan", Tokens.TAN);
 		tokens.put("log", Tokens.LOG);
 	}
-
 
 	private final Tokens value;
 	private final String charValue;

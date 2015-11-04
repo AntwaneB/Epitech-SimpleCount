@@ -1,10 +1,12 @@
 package com.epitech.simplecount.views;
 
+import com.epitech.simplecount.controllers.ButtonController;
 import com.epitech.simplecount.models.Calculator;
 import com.epitech.simplecount.models.Settings;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Observer;
 import java.util.Observable;
@@ -19,27 +21,34 @@ public class CalculatorView extends JFrame implements Observer
 		this.model.addObserver(this);
 
 		this.setStyle();
-
-		// Catching keys pressed
-		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
-			@Override
-			public boolean dispatchKeyEvent(KeyEvent e) {
-				if (e.getID() == KeyEvent.KEY_TYPED)
-					System.out.println("Got key event!" + e.getKeyChar());
-				return (false);
-			}
-		});
-
 		this.setLayout();
+		this.handleKeys();
 
 		pack();
 		setVisible(true);
 	}
 
+	private void handleKeys()
+	{
+		ButtonController keyHandler = new ButtonController(model);
+		CalculatorView self = this;
+
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+			@Override
+			public boolean dispatchKeyEvent(KeyEvent e) {
+				if (e.getID() == KeyEvent.KEY_TYPED)
+				{
+					keyHandler.actionPerformed(new ActionEvent(self, ActionEvent.ACTION_PERFORMED, Character.toString(e.getKeyChar())));
+				}
+				return (false);
+			}
+		});
+	}
+
 	private void setStyle()
 	{
 		// Managing style
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setTitle(Settings.get("application_title"));
 		this.setPreferredSize(new Dimension(Settings.asInt("application_width"), Settings.asInt("application_height")));
 		this.setResizable(false);

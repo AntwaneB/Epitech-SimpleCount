@@ -63,7 +63,7 @@ public class ButtonController implements ActionListener
 						break;
 
 					default:
-						throw new RuntimeException("Invalid action");
+						break;
 				}
 			}
 		} catch (Exception e)
