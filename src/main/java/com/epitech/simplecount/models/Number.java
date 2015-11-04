@@ -57,16 +57,16 @@ public class Number extends AExpressionPart
 
 	public Number epur()
 	{
-		while (tokens.get(0).getValue() == Tokens.ZERO)
+		while (tokens.size() > 0 && tokens.get(0).getValue() == Tokens.ZERO)
 			tokens.remove(0);
 
-		while (tokens.get(tokens.size() - 1).getValue() == Tokens.ZERO)
+		while (tokens.size() > 0 && tokens.get(tokens.size() - 1).getValue() == Tokens.ZERO)
 			tokens.remove(tokens.size() - 1);
 
-		if (tokens.get(tokens.size() - 1).getValue() == Tokens.DOT)
+		if (tokens.size() > 0 && tokens.get(tokens.size() - 1).getValue() == Tokens.DOT)
 			tokens.remove(tokens.size() - 1);
 
-		if (tokens.size() == 0 || tokens.get(0).getValue() == Tokens.DOT)
+		if (tokens.size() > 0 && tokens.size() == 0 || tokens.get(0).getValue() == Tokens.DOT)
 			tokens.add(0, new Token('0'));
 
 		return (this);

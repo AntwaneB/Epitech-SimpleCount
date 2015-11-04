@@ -32,10 +32,11 @@ public class TextFieldView extends JTextField implements Observer
 	private void setStyle()
 	{
 		this.setFont(new Font("Arial", Font.PLAIN, 40));
-		this.setHorizontalAlignment(JTextField.RIGHT);
-		this.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 10, 20, 10));
+		this.setHorizontalAlignment(JTextField.LEFT);
+		this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
 		this.setEditable(false);
-		this.setBackground(new Color(0xf2f2f2));
+		this.setBackground(new Color(0x1e1e1e));
+		this.setForeground(Color.WHITE);
 	}
 
 	public void update(Observable o, Object arg)

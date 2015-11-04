@@ -8,30 +8,31 @@ import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
-public class ButtonView extends JButton implements Observer
+public class SubmitView extends JButton implements Observer
 {
 	public static class Factory
 	{
-		public static ButtonView make(String text, Calculator model)
+		public static SubmitView make(String text, Calculator model)
 		{
-			ButtonView button = new ButtonView(text);
+			SubmitView button = new SubmitView(text);
 			button.addActionListener(new ButtonController(model));
 
 			return (button);
 		}
-		public static ButtonView make(String text, Calculator model, GridBagConstraints constraints, int x, int y)
+
+		public static SubmitView make(String text, Calculator model, GridBagConstraints constraints, int x, int y)
 		{
 			constraints.gridx = x;
 			constraints.gridy = y;
 
-			ButtonView button = new ButtonView(text);
+			SubmitView button = new SubmitView(text);
 			button.addActionListener(new ButtonController(model));
 
 			return (button);
 		}
 	}
 
-	public ButtonView(String text)
+	public SubmitView(String text)
 	{
 		this.setText(text);
 
@@ -41,23 +42,20 @@ public class ButtonView extends JButton implements Observer
 	private void setStyle()
 	{
 		// Managing style
-		int fontSize = this.getPreferredSize().width / 3;
-		System.out.println(this.getText() + " = " + this.getPreferredSize().width + "px");
-
-		this.setFont(new Font("Arial", Font.PLAIN, fontSize));
-		this.setBackground(new Color(0x292929));
-		this.setForeground(new Color(0x8e8d9b));
+		this.setFont(new Font("Arial", Font.PLAIN, 25));
+		this.setBackground(new Color(0xff9000));
+		this.setForeground(Color.WHITE);
 		this.setBorderPainted(false);
 		this.setFocusPainted(false);
 
 		// Managing hover style
-		ButtonView self = this;
+		SubmitView self = this;
 		this.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				self.setBackground(new Color(0x333333));
+				self.setBackground(new Color(0xffa734));
 			}
 			public void mouseExited(java.awt.event.MouseEvent evt) {
-				self.setBackground(new Color(0x292929));
+				self.setBackground(new Color(0xff9000));
 			}
 		});
 	}

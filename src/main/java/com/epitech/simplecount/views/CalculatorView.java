@@ -37,38 +37,124 @@ public class CalculatorView extends JFrame implements Observer
 
 	private void setLayout()
 	{
-		GridBagConstraints c = new GridBagConstraints();
-		c.fill = GridBagConstraints.BOTH;
-		c.weightx = 1;
-		c.weighty = 1;
+		JPanel mainPanel = new JPanel(new GridBagLayout());
+		mainPanel.setBackground(new Color(0x292929));
 
-		c.gridwidth = 4;
-		c.gridheight = 1;
-		this.add(TextFieldView.Factory.make(this.model, c, 0, 0), c);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.weightx = 0.75;
+		gbc.weighty = 0.15;
+		gbc.gridwidth = 3;
+		gbc.gridheight = 1;
+		mainPanel.add(makeResultPanel(), gbc);
 
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		this.add(ButtonView.Factory.make("7", this.model, c, 0, 2), c);
-		this.add(ButtonView.Factory.make("8", this.model, c, 1, 2), c);
-		this.add(ButtonView.Factory.make("9", this.model, c, 2, 2), c);
+		gbc.weightx = 0.25;
+		gbc.gridx = 3;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		mainPanel.add(makeSubmitPanel(), gbc);
 
-		this.add(ButtonView.Factory.make("4", this.model, c, 0, 3), c);
-		this.add(ButtonView.Factory.make("5", this.model, c, 1, 3), c);
-		this.add(ButtonView.Factory.make("6", this.model, c, 2, 3), c);
+		gbc.gridy = 1;
+		gbc.weighty = 0.15;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		mainPanel.add(makeButtonPanel("+", this.model, gbc, 3, 1), gbc);
+		mainPanel.add(makeButtonPanel("-", this.model, gbc, 3, 2), gbc);
+		mainPanel.add(makeButtonPanel("*", this.model, gbc, 3, 3), gbc);
+		mainPanel.add(makeButtonPanel("/", this.model, gbc, 3, 4), gbc);
+		mainPanel.add(makeButtonPanel("%", this.model, gbc, 3, 5), gbc);
 
-		this.add(ButtonView.Factory.make("1", this.model, c, 0, 4), c);
-		this.add(ButtonView.Factory.make("2", this.model, c, 1, 4), c);
-		this.add(ButtonView.Factory.make("3", this.model, c, 2, 4), c);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weighty = 0.15;
+		gbc.weightx = 0.75;
+		gbc.gridwidth = 3;
+		gbc.gridheight = 1;
+		mainPanel.add(makeFunctionsPanel(), gbc);
 
-		this.add(ButtonView.Factory.make("0", this.model, c, 0, 5), c);
-		this.add(ButtonView.Factory.make(".", this.model, c, 1, 5), c);
-		this.add(ButtonView.Factory.make("=", this.model, c, 2, 5), c);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weighty = 0.15;
+		gbc.weightx = 0.25;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		mainPanel.add(makeButtonPanel("7", this.model, gbc, 0, 2), gbc);
+		mainPanel.add(makeButtonPanel("8", this.model, gbc, 1, 2), gbc);
+		mainPanel.add(makeButtonPanel("9", this.model, gbc, 2, 2), gbc);
 
-		this.add(ButtonView.Factory.make("+", this.model, c, 3, 1), c);
-		this.add(ButtonView.Factory.make("-", this.model, c, 3, 2), c);
-		this.add(ButtonView.Factory.make("*", this.model, c, 3, 3), c);
-		this.add(ButtonView.Factory.make("/", this.model, c, 3, 4), c);
-		this.add(ButtonView.Factory.make("%", this.model, c, 3, 5), c);
+		mainPanel.add(makeButtonPanel("4", this.model, gbc, 0, 3), gbc);
+		mainPanel.add(makeButtonPanel("5", this.model, gbc, 1, 3), gbc);
+		mainPanel.add(makeButtonPanel("6", this.model, gbc, 2, 3), gbc);
+
+		mainPanel.add(makeButtonPanel("1", this.model, gbc, 0, 4), gbc);
+		mainPanel.add(makeButtonPanel("2", this.model, gbc, 1, 4), gbc);
+		mainPanel.add(makeButtonPanel("3", this.model, gbc, 2, 4), gbc);
+
+		mainPanel.add(makeButtonPanel("0", this.model, gbc, 0, 5), gbc);
+		mainPanel.add(makeButtonPanel(".", this.model, gbc, 1, 5), gbc);
+		mainPanel.add(makeButtonPanel("?", this.model, gbc, 2, 5), gbc);
+
+
+		this.add(mainPanel);
+	}
+
+	private Component makeResultPanel()
+	{
+		JPanel panel = new JPanel(new GridLayout(1, 1));
+		panel.setBackground(new Color(0x1e1e1e));
+
+		panel.add(new TextFieldView(this.model));
+
+		return (panel);
+	}
+
+	private Component makeSubmitPanel()
+	{
+		JPanel panel = new JPanel(new GridLayout(1, 1));
+		panel.setBackground(new Color(0xff9000));
+
+		panel.add(SubmitView.Factory.make("=", this.model));
+
+		return (panel);
+	}
+
+	private Component makeFunctionsPanel()
+	{
+		JPanel panel = new JPanel(new GridLayout(2, 4));
+		panel.setOpaque(false);
+		panel.setBackground(new Color(0x212121));
+
+		panel.add(ButtonView.Factory.make("A", this.model));
+		panel.add(ButtonView.Factory.make("B", this.model));
+		panel.add(ButtonView.Factory.make("C", this.model));
+		panel.add(ButtonView.Factory.make("D", this.model));
+
+		panel.add(ButtonView.Factory.make("E", this.model));
+		panel.add(ButtonView.Factory.make("F", this.model));
+		panel.add(ButtonView.Factory.make("G", this.model));
+		panel.add(ButtonView.Factory.make("H", this.model));
+
+		return (panel);
+	}
+
+	private Component makeButtonPanel(String text, Calculator model, GridBagConstraints ggbc, int x, int y)
+	{
+		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setBackground(new Color(0x212121));
+
+		ggbc.gridx = x;
+		ggbc.gridy = y;
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+
+		panel.add(ButtonView.Factory.make(text, model), gbc);
+
+		return (panel);
 	}
 
 	private void setStyle()
@@ -76,10 +162,9 @@ public class CalculatorView extends JFrame implements Observer
 		// Managing style
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Calculatator");
-		this.setPreferredSize(new Dimension(370, 600));
+		this.setPreferredSize(new Dimension(320, 550));
 		this.setResizable(false);
-		this.setLayout(new GridBagLayout());
-		getContentPane().setBackground(new Color(0xf2f2f2));
+		getContentPane().setBackground(new Color(0x292929));
 
 		// Setting start position
 		Dimension screenSize = new Dimension(Toolkit.getDefaultToolkit().getScreenSize());
