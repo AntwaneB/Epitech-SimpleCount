@@ -2,6 +2,8 @@ package com.epitech.simplecount.models;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Vector;
 
@@ -23,6 +25,14 @@ public class Number extends AExpressionPart
 
 		for (char c : value.toCharArray())
 			this.pushToken(new Token(c));
+	}
+
+	public Number(Number number)
+	{
+		this.type = Type.OPERAND;
+
+		for (Token t: number.tokens)
+			this.pushToken(t);
 	}
 
 	public void pushToken(Token token)
@@ -56,22 +66,24 @@ public class Number extends AExpressionPart
 
 	public Number epur()
 	{
-		if (tokens.size() == 1 && tokens.get(0).is(Tokens.ZERO))
+		Number number = new Number(new BigDecimal(this.toString()).round(new MathContext(9, RoundingMode.HALF_EVEN)).toString());
+
+		if (number.tokens.size() == 1 && number.tokens.get(0).is(Tokens.ZERO))
 			return (this);
 
-		while (tokens.size() > 0 && tokens.get(0).is(Tokens.ZERO))
-			tokens.remove(0);
+		while (number.tokens.size() > 0 && number.tokens.get(0).is(Tokens.ZERO))
+			number.tokens.remove(0);
 
-		while (decimal && tokens.size() > 0 && tokens.get(tokens.size() - 1).is(Tokens.ZERO))
-			tokens.remove(tokens.size() - 1);
+		while (number.decimal && number.tokens.size() > 0 && number.tokens.get(number.tokens.size() - 1).is(Tokens.ZERO))
+			number.tokens.remove(number.tokens.size() - 1);
 
-		if (tokens.size() > 0 && tokens.get(tokens.size() - 1).is(Tokens.DOT))
-			tokens.remove(tokens.size() - 1);
+		if (number.tokens.size() > 0 && number.tokens.get(number.tokens.size() - 1).is(Tokens.DOT))
+			number.tokens.remove(number.tokens.size() - 1);
 
-		if (tokens.size() == 0 || tokens.get(0).is(Tokens.DOT))
-			tokens.add(0, new Token('0'));
+		if (number.tokens.size() == 0 || tokens.get(0).is(Tokens.DOT))
+			number.tokens.add(0, new Token('0'));
 
-		return (this);
+		return (number);
 	}
 
 	public boolean isDecimal()
