@@ -51,8 +51,11 @@ public class CalculatorView extends JFrame implements Observer
 
 	private void setLayout()
 	{
+		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+
 		JPanel mainPanel = new JPanel(new GridBagLayout());
 		mainPanel.setBackground(new Color(0x292929));
+		mainPanel.setPreferredSize(new Dimension(320, 522));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;

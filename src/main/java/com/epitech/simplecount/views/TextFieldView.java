@@ -45,7 +45,7 @@ public class TextFieldView extends JTextField implements Observer
 		this.setText(newText);
 
 		if (newText.length() > 8)
-			this.setFont(new Font("Arial", Font.PLAIN, 40 - newText.length()));
+			this.setFont(new Font("Arial", Font.PLAIN, 40 - (newText.length() > 28 ? 28 : newText.length())));
 		else if (this.getFont().getSize() < 40)
 			this.setFont(new Font("Arial", Font.PLAIN, 40 - newText.length()));
 	}
