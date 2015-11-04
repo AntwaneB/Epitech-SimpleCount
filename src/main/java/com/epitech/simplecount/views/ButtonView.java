@@ -2,6 +2,7 @@ package com.epitech.simplecount.views;
 
 import com.epitech.simplecount.controllers.ButtonController;
 import com.epitech.simplecount.models.Calculator;
+import com.epitech.simplecount.models.Settings;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,8 +38,8 @@ public class ButtonView extends JButton implements Observer
 
 		public static void reset()
 		{
-			Factory.background = new Color(0x292929);
-			Factory.foreground = new Color(0x8e8d9b);
+			Factory.background = new Color(Settings.asInt("default_button_background", 16));
+			Factory.foreground = new Color(Settings.asInt("default_button_foreground", 16));
 			Factory.fontSize = 25;
 		}
 	}

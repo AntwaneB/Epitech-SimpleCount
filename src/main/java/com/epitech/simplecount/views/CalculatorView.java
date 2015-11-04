@@ -1,6 +1,7 @@
 package com.epitech.simplecount.views;
 
 import com.epitech.simplecount.models.Calculator;
+import com.epitech.simplecount.models.Settings;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,8 +40,8 @@ public class CalculatorView extends JFrame implements Observer
 	{
 		// Managing style
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setTitle("Calculatator");
-		this.setPreferredSize(new Dimension(320, 550));
+		this.setTitle(Settings.get("application_title"));
+		this.setPreferredSize(new Dimension(Settings.asInt("application_width"), Settings.asInt("application_height")));
 		this.setResizable(false);
 		getContentPane().setBackground(new Color(0x292929));
 
@@ -54,8 +55,8 @@ public class CalculatorView extends JFrame implements Observer
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
 		JPanel mainPanel = new JPanel(new GridBagLayout());
-		mainPanel.setBackground(new Color(0x292929));
-		mainPanel.setPreferredSize(new Dimension(320, 522));
+		mainPanel.setBackground(new Color(Settings.asInt("application_background", 16)));
+		mainPanel.setPreferredSize(new Dimension(Settings.asInt("application_width"), Settings.asInt("application_height") - 28));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
@@ -86,9 +87,7 @@ public class CalculatorView extends JFrame implements Observer
 		gbc.weightx = 0.75;
 		gbc.gridwidth = 3;
 		gbc.gridheight = 1;
-		ButtonView.Factory.background = new Color(0x262626);
 		mainPanel.add(makeFunctionsPanel(), gbc);
-		ButtonView.Factory.reset();
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -120,7 +119,7 @@ public class CalculatorView extends JFrame implements Observer
 		JPanel panel = new JPanel(new GridLayout(1, 1));
 		panel.setBackground(new Color(0x1e1e1e));
 
-		panel.add(new TextFieldView(this.model));
+		panel.add(TextFieldView.Factory.make(this.model));
 
 		return (panel);
 	}
@@ -128,7 +127,6 @@ public class CalculatorView extends JFrame implements Observer
 	private Component makeSubmitPanel()
 	{
 		JPanel panel = new JPanel(new GridLayout(1, 1));
-		panel.setBackground(new Color(0xff9000));
 
 		panel.add(SubmitView.Factory.make("=", this.model));
 
@@ -137,17 +135,23 @@ public class CalculatorView extends JFrame implements Observer
 
 	private void makeControlsPanel(JPanel mainPanel, GridBagConstraints gbc)
 	{
-		ButtonView.Factory.background = new Color(0x262626);
+		ButtonView.Factory.background = new Color(Settings.asInt("controls_background", 16));
+		ButtonView.Factory.foreground = new Color(Settings.asInt("controls_foreground", 16));
+
 		mainPanel.add(makeButtonPanel("+", this.model, gbc, 3, 1), gbc);
 		mainPanel.add(makeButtonPanel("-", this.model, gbc, 3, 2), gbc);
 		mainPanel.add(makeButtonPanel("*", this.model, gbc, 3, 3), gbc);
 		mainPanel.add(makeButtonPanel("/", this.model, gbc, 3, 4), gbc);
 		mainPanel.add(makeButtonPanel("%", this.model, gbc, 3, 5), gbc);
+
 		ButtonView.Factory.reset();
 	}
 
 	private Component makeFunctionsPanel()
 	{
+		ButtonView.Factory.background = new Color(Settings.asInt("functions_background", 16));
+		ButtonView.Factory.foreground = new Color(Settings.asInt("functions_foreground", 16));
+
 		JPanel panel = new JPanel(new GridLayout(2, 4));
 		panel.setBackground(ButtonView.Factory.background);
 
@@ -162,13 +166,14 @@ public class CalculatorView extends JFrame implements Observer
 		panel.add(ButtonView.Factory.make("tan", this.model));
 		panel.add(ButtonView.Factory.make("log", this.model));
 
+		ButtonView.Factory.reset();
+
 		return (panel);
 	}
 
 	private Component makeButtonPanel(String text, Calculator model, GridBagConstraints ggbc, int x, int y)
 	{
 		JPanel panel = new JPanel(new GridBagLayout());
-		panel.setBackground(new Color(0x212121));
 
 		ggbc.gridx = x;
 		ggbc.gridy = y;

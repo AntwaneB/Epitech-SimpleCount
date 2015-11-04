@@ -1,5 +1,7 @@
 package com.epitech.simplecount.views;
 
+import com.epitech.simplecount.models.Settings;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Observable;
@@ -9,34 +11,53 @@ public class TextFieldView extends JTextField implements Observer
 {
 	public static class Factory
 	{
+		public static Color background;
+		public static Color foreground;
+		public static int fontSize;
+		static {
+			Factory.reset();
+		}
+
+		public static TextFieldView make(Observable model)
+		{
+			return (new TextFieldView(model, Factory.fontSize, Factory.background, Factory.foreground));
+		}
+
 		public static TextFieldView make(Observable model, GridBagConstraints constraints, int x, int y)
 		{
 			constraints.gridx = x;
 			constraints.gridy = y;
 
-			return (new TextFieldView(model));
+			return (Factory.make(model));
+		}
+
+		public static void reset()
+		{
+			Factory.background = new Color(Settings.asInt("result_background", 16));
+			Factory.foreground = new Color(Settings.asInt("result_foreground", 16));
+			Factory.fontSize = 40;
 		}
 	}
 
 	private Observable model;
 
-	public TextFieldView(Observable model)
+	public TextFieldView(Observable model, int fontSize, Color background, Color foreground)
 	{
 		this.model = model;
 		this.model.addObserver(this);
 
 		this.setText(this.model.toString());
-		this.setStyle();
+		this.setStyle(fontSize, background, foreground);
 	}
 
-	private void setStyle()
+	private void setStyle(int fontSize, Color background, Color foreground)
 	{
-		this.setFont(new Font("Arial", Font.PLAIN, 40));
+		this.setFont(new Font("Arial", Font.PLAIN, fontSize));
+		this.setBackground(background);
+		this.setForeground(foreground);
 		this.setHorizontalAlignment(JTextField.LEFT);
 		this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
 		this.setEditable(false);
-		this.setBackground(new Color(0x1e1e1e));
-		this.setForeground(Color.WHITE);
 	}
 
 	public void update(Observable o, Object arg)
