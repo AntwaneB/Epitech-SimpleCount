@@ -61,6 +61,7 @@ public class CalculatorView extends JFrame implements Observer
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
+
 		gbc.weightx = 0.75;
 		gbc.weighty = 0.15;
 		gbc.gridwidth = 3;
@@ -77,13 +78,7 @@ public class CalculatorView extends JFrame implements Observer
 		gbc.weighty = 0.15;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-		ButtonView.Factory.background = new Color(0x262626);
-		mainPanel.add(makeButtonPanel("+", this.model, gbc, 3, 1), gbc);
-		mainPanel.add(makeButtonPanel("-", this.model, gbc, 3, 2), gbc);
-		mainPanel.add(makeButtonPanel("*", this.model, gbc, 3, 3), gbc);
-		mainPanel.add(makeButtonPanel("/", this.model, gbc, 3, 4), gbc);
-		mainPanel.add(makeButtonPanel("%", this.model, gbc, 3, 5), gbc);
-		ButtonView.Factory.reset();
+		makeControlsPanel(mainPanel, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -138,6 +133,17 @@ public class CalculatorView extends JFrame implements Observer
 		panel.add(SubmitView.Factory.make("=", this.model));
 
 		return (panel);
+	}
+
+	private void makeControlsPanel(JPanel mainPanel, GridBagConstraints gbc)
+	{
+		ButtonView.Factory.background = new Color(0x262626);
+		mainPanel.add(makeButtonPanel("+", this.model, gbc, 3, 1), gbc);
+		mainPanel.add(makeButtonPanel("-", this.model, gbc, 3, 2), gbc);
+		mainPanel.add(makeButtonPanel("*", this.model, gbc, 3, 3), gbc);
+		mainPanel.add(makeButtonPanel("/", this.model, gbc, 3, 4), gbc);
+		mainPanel.add(makeButtonPanel("%", this.model, gbc, 3, 5), gbc);
+		ButtonView.Factory.reset();
 	}
 
 	private Component makeFunctionsPanel()
