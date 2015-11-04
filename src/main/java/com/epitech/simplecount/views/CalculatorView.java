@@ -52,7 +52,7 @@ public class CalculatorView extends JFrame implements Observer
 		this.setTitle(Settings.get("application_title"));
 		this.setPreferredSize(new Dimension(Settings.asInt("application_width"), Settings.asInt("application_height")));
 		this.setResizable(false);
-		getContentPane().setBackground(new Color(0x292929));
+		getContentPane().setBackground(new Color(Settings.asInt("application_background", 16)));
 
 		// Setting start position
 		Dimension screenSize = new Dimension(Toolkit.getDefaultToolkit().getScreenSize());
