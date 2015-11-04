@@ -47,17 +47,26 @@ public class SubmitView extends JButton implements Observer
 		this.setForeground(Color.WHITE);
 		this.setBorderPainted(false);
 		this.setFocusPainted(false);
+		super.setContentAreaFilled(false);
+	}
 
-		// Managing hover style
-		SubmitView self = this;
-		this.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				self.setBackground(new Color(0xffa734));
-			}
-			public void mouseExited(java.awt.event.MouseEvent evt) {
-				self.setBackground(new Color(0xff9000));
-			}
-		});
+	@Override
+	protected void paintComponent(Graphics g)
+	{
+		if (getModel().isPressed())
+			g.setColor(new Color(0xd67900));
+		else if (getModel().isRollover())
+			g.setColor(new Color(0xfba433));
+		else
+			g.setColor(getBackground());
+
+		g.fillRect(0, 0, getWidth(), getHeight());
+		super.paintComponent(g);
+	}
+
+	@Override
+	public void setContentAreaFilled(boolean b)
+	{
 	}
 
 	public void update(Observable o, Object arg)

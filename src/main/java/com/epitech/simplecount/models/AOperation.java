@@ -10,11 +10,11 @@ public abstract class AOperation extends AExpressionPart implements IOperation
 	{
 		private static final Map<Token.Tokens, String> types = new HashMap<>();
 		static {
-			types.put(Token.Tokens.PLUS, "com.epitech.simplecount.models.Addition");
-			types.put(Token.Tokens.MINUS, "com.epitech.simplecount.models.Subtraction");
-			types.put(Token.Tokens.MULT, "com.epitech.simplecount.models.Multiplication");
-			types.put(Token.Tokens.DIV, "com.epitech.simplecount.models.Division");
-			types.put(Token.Tokens.MOD, "com.epitech.simplecount.models.Modulo");
+			types.put(Token.Tokens.PLUS, "com.epitech.simplecount.models.operations.Addition");
+			types.put(Token.Tokens.MINUS, "com.epitech.simplecount.models.operations.Subtraction");
+			types.put(Token.Tokens.MULT, "com.epitech.simplecount.models.operations.Multiplication");
+			types.put(Token.Tokens.DIV, "com.epitech.simplecount.models.operations.Division");
+			types.put(Token.Tokens.MOD, "com.epitech.simplecount.models.operations.Modulo");
 		}
 
 		public static AOperation make(Token token)

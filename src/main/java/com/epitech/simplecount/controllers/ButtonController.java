@@ -3,6 +3,7 @@ package com.epitech.simplecount.controllers;
 import com.epitech.simplecount.models.Calculator;
 import com.epitech.simplecount.models.Token;
 import com.epitech.simplecount.models.Token.Tokens;
+import com.epitech.simplecount.views.ButtonView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,8 +22,7 @@ public class ButtonController implements ActionListener
 	{
 		if (event.getID() == ActionEvent.ACTION_PERFORMED)
 		{
-			Token token = new Token(event.getActionCommand().charAt(0));
-			System.out.println("Button pressed : " + token.getCharValue());
+			Token token = new Token(event.getActionCommand());
 
 			switch (token.getValue())
 			{
@@ -50,6 +50,17 @@ public class ButtonController implements ActionListener
 				case DIV:
 				case MOD:
 					this.model.pushOperator(token);
+					break;
+
+				case SQUARE:
+				case CUBE:
+				case SQRT:
+				case COS:
+				case SIN:
+				case TAN:
+				case LOG:
+				case EXP:
+					this.model.pushFunction(token);
 					break;
 
 				default:

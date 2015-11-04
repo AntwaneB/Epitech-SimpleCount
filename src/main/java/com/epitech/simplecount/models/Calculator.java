@@ -36,6 +36,23 @@ public class Calculator extends Observable
 		this.notifyObservers();
 	}
 
+	public void pushFunction(Token token)
+	{
+		if (expression.size() == 0 && result != null)
+		{
+			expression.add(result);
+		}
+		if (expression.size() == 1 && expression.get(0).is(Type.OPERAND))
+		{
+			expression.add(AFunction.Factory.make(token));
+		}
+
+		result = null;
+
+		this.setChanged();
+		this.notifyObservers();
+	}
+
 	public void pushNumber(Token token)
 	{
 		if (expression.size() == 0 || expression.get(expression.size() - 1).is(Type.OPERATION))
@@ -70,6 +87,19 @@ public class Calculator extends Observable
 			IOperation operation = (AOperation)expression.get(1);
 
 			result = operation.execute(leftOperand, rightOperand);
+
+			history.add(new ArrayList<>(expression));
+			expression.clear();
+		}
+		else if (expression.size() == 2
+				&& expression.get(0).is(Type.OPERAND)
+				&& expression.get(1).is(Type.FUNCTION))
+		{
+			Number operand = (Number)expression.get(0);
+
+			IFunction function = (AFunction)expression.get(1);
+
+			result = function.execute(operand);
 
 			history.add(new ArrayList<>(expression));
 			expression.clear();

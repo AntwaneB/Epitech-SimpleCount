@@ -35,6 +35,20 @@ public class CalculatorView extends JFrame implements Observer
 		setVisible(true);
 	}
 
+	private void setStyle()
+	{
+		// Managing style
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setTitle("Calculatator");
+		this.setPreferredSize(new Dimension(320, 550));
+		this.setResizable(false);
+		getContentPane().setBackground(new Color(0x292929));
+
+		// Setting start position
+		Dimension screenSize = new Dimension(Toolkit.getDefaultToolkit().getScreenSize());
+		this.setLocation(screenSize.width / 2 - 450, screenSize.height / 2 - 600 / 2);
+	}
+
 	private void setLayout()
 	{
 		JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -94,8 +108,6 @@ public class CalculatorView extends JFrame implements Observer
 
 		mainPanel.add(makeButtonPanel("0", this.model, gbc, 0, 5), gbc);
 		mainPanel.add(makeButtonPanel(".", this.model, gbc, 1, 5), gbc);
-		mainPanel.add(makeButtonPanel("?", this.model, gbc, 2, 5), gbc);
-
 
 		this.add(mainPanel);
 	}
@@ -126,15 +138,15 @@ public class CalculatorView extends JFrame implements Observer
 		panel.setOpaque(false);
 		panel.setBackground(new Color(0x212121));
 
-		panel.add(ButtonView.Factory.make("A", this.model));
-		panel.add(ButtonView.Factory.make("B", this.model));
-		panel.add(ButtonView.Factory.make("C", this.model));
-		panel.add(ButtonView.Factory.make("D", this.model));
+		panel.add(ButtonView.Factory.make("<html>x<sup>2</sup></html>", this.model, 12));
+		panel.add(ButtonView.Factory.make("<html>x<sup>3</sup></html>", this.model, 12));
+		panel.add(ButtonView.Factory.make("\u221A", this.model, 12));
+		panel.add(ButtonView.Factory.make("<html>e<sup>x</sup></html>", this.model, 12));
 
-		panel.add(ButtonView.Factory.make("E", this.model));
-		panel.add(ButtonView.Factory.make("F", this.model));
-		panel.add(ButtonView.Factory.make("G", this.model));
-		panel.add(ButtonView.Factory.make("H", this.model));
+		panel.add(ButtonView.Factory.make("cos", this.model, 12));
+		panel.add(ButtonView.Factory.make("sin", this.model, 12));
+		panel.add(ButtonView.Factory.make("tan", this.model, 12));
+		panel.add(ButtonView.Factory.make("log", this.model, 12));
 
 		return (panel);
 	}
@@ -152,23 +164,9 @@ public class CalculatorView extends JFrame implements Observer
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 
-		panel.add(ButtonView.Factory.make(text, model), gbc);
+		panel.add(ButtonView.Factory.make(text, model, 25), gbc);
 
 		return (panel);
-	}
-
-	private void setStyle()
-	{
-		// Managing style
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setTitle("Calculatator");
-		this.setPreferredSize(new Dimension(320, 550));
-		this.setResizable(false);
-		getContentPane().setBackground(new Color(0x292929));
-
-		// Setting start position
-		Dimension screenSize = new Dimension(Toolkit.getDefaultToolkit().getScreenSize());
-		this.setLocation(screenSize.width / 2 - 450, screenSize.height / 2 - 600 / 2);
 	}
 
 	public void update(Observable o, Object arg)

@@ -1,11 +1,14 @@
-package com.epitech.simplecount.models;
+package com.epitech.simplecount.models.operations;
+
+import com.epitech.simplecount.models.*;
+import com.epitech.simplecount.models.Number;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public class Subtraction extends AOperation
 {
-	public Number execute(Number leftOperand, Number rightOperand)
+	public com.epitech.simplecount.models.Number execute(Number leftOperand, Number rightOperand)
 	{
 		if (leftOperand.isDecimal() || rightOperand.isDecimal())
 			return (this.executeDecimal(leftOperand, rightOperand));
