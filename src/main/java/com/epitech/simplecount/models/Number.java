@@ -68,26 +68,19 @@ public class Number extends AExpressionPart
 		return (strValue);
 	}
 
-	public Number epur()
+	public String epur()
 	{
-		Number number = new Number(new BigDecimal(this.toString()).round(new MathContext(Settings.asInt("max_decimals") + 1, RoundingMode.HALF_EVEN)).toString());
+		String result = new BigDecimal(this.toString()).round(new MathContext(Settings.asInt("max_decimals") + 1, RoundingMode.HALF_EVEN)).toString();
 
-		if (number.tokens.size() == 1 && number.tokens.get(0).is(Tokens.ZERO))
-			return (this);
+		if (this.decimal)
+		{
+			while (result.length() > 1 && result.charAt(result.length() - 1) == '0')
+				result = result.substring(0, result.length() - 1);
+		}
+		if (result.charAt(result.length() - 1) == '.')
+			result = result.substring(0, result.length() - 1);
 
-		while (number.tokens.size() > 0 && number.tokens.get(0).is(Tokens.ZERO))
-			number.tokens.remove(0);
-
-		while (number.decimal && number.tokens.size() > 0 && number.tokens.get(number.tokens.size() - 1).is(Tokens.ZERO))
-			number.tokens.remove(number.tokens.size() - 1);
-
-		if (number.tokens.size() > 0 && number.tokens.get(number.tokens.size() - 1).is(Tokens.DOT))
-			number.tokens.remove(number.tokens.size() - 1);
-
-		if (number.tokens.size() == 0 || tokens.get(0).is(Tokens.DOT))
-			number.tokens.add(0, new Token('0'));
-
-		return (number);
+		return (result);
 	}
 
 	public boolean isDecimal()

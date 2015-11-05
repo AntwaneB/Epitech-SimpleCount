@@ -157,7 +157,12 @@ public class Expression extends Observable
 		if (expression.size() > 1)
 		{
 			for (AExpressionPart part : expression)
-				str += part.toString() + " ";
+			{
+				if (part instanceof Number)
+					str += ((Number)(part)).epur().toString() + " ";
+				else
+					str += part.toString() + " ";
+			}
 		}
 
 		return (str);

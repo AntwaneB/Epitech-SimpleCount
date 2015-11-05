@@ -1,4 +1,3 @@
-- BigDecimal.round() transforme le chiffre en puissance sous la forme x*10^y > Exception car le "E" des puissances n'est pas géré comme Token
-- Gérer l'affichage des nombres qui dépassent de l'affichage s'ils sont trop grands
-- Afficher l'expression entière au dessus du nombre actuel
+// - BigDecimal.round() transforme le chiffre en puissance sous la forme x*10^y > Exception car le "E" des puissances n'est pas géré comme Token
+// - Gérer l'affichage des nombres qui dépassent de l'affichage s'ils sont trop grands
 - Gérer les fonctions restantes
