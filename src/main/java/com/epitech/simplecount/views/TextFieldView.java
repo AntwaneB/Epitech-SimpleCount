@@ -14,13 +14,14 @@ public class TextFieldView extends JTextField implements Observer
 		public static Color background;
 		public static Color foreground;
 		public static int fontSize;
+		public static boolean dynamicFontSize;
 		static {
 			Factory.reset();
 		}
 
 		public static TextFieldView make(Observable model)
 		{
-			return (new TextFieldView(model, Factory.fontSize, Factory.background, Factory.foreground));
+			return (new TextFieldView(model, Factory.fontSize, Factory.background, Factory.foreground, Factory.dynamicFontSize));
 		}
 
 		public static TextFieldView make(Observable model, GridBagConstraints constraints, int x, int y)
@@ -36,18 +37,21 @@ public class TextFieldView extends JTextField implements Observer
 			Factory.background = new Color(Settings.asInt("result_background", 16));
 			Factory.foreground = new Color(Settings.asInt("result_foreground", 16));
 			Factory.fontSize = 40;
+			Factory.dynamicFontSize = true;
 		}
 	}
 
 	private Observable model;
 	private int baseFontSize;
+	private boolean dynamicFontSize;
 
-	public TextFieldView(Observable model, int fontSize, Color background, Color foreground)
+	public TextFieldView(Observable model, int fontSize, Color background, Color foreground, boolean dynamicFontSize)
 	{
 		this.model = model;
 		this.model.addObserver(this);
 
 		this.baseFontSize = fontSize;
+		this.dynamicFontSize = dynamicFontSize;
 
 		this.setText(this.model.toString());
 		this.setStyle(fontSize, background, foreground);
@@ -68,9 +72,12 @@ public class TextFieldView extends JTextField implements Observer
 		String newText = this.model.toString();
 		this.setText(newText);
 
-		if (newText.length() > 8)
-			this.setFont(new Font("Arial", Font.PLAIN, this.baseFontSize - (newText.length() > 28 ? 28 : newText.length())));
-		else if (this.getFont().getSize() < this.baseFontSize)
-			this.setFont(new Font("Arial", Font.PLAIN, this.baseFontSize));
+		if (this.dynamicFontSize)
+		{
+			if (newText.length() > 8)
+				this.setFont(new Font("Arial", Font.PLAIN, this.baseFontSize - (newText.length() > 28 ? 28 : newText.length())));
+			else if (this.getFont().getSize() < this.baseFontSize)
+				this.setFont(new Font("Arial", Font.PLAIN, this.baseFontSize));
+		}
 	}
 }

@@ -154,8 +154,11 @@ public class Expression extends Observable
 	{
 		String str = "";
 
-		for (AExpressionPart part: expression)
-			str += part.toString() + " ";
+		if (expression.size() > 1)
+		{
+			for (AExpressionPart part : expression)
+				str += part.toString() + " ";
+		}
 
 		return (str);
 	}

@@ -136,6 +136,7 @@ public class CalculatorView extends JFrame implements Observer
 		panel.add(TextFieldView.Factory.make(this.model, gbc, 0, 1), gbc);
 
 		TextFieldView.Factory.fontSize = 12;
+		TextFieldView.Factory.dynamicFontSize = false;
 		TextFieldView.Factory.background = new Color(Settings.asInt("expression_background", 16));
 		TextFieldView.Factory.foreground = new Color(Settings.asInt("expression_foreground", 16));
 		gbc.weighty = 0.2;
