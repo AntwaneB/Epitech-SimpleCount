@@ -4,5 +4,6 @@
 // - Constructor de Number avec un BigDecimal
 // - Mix round et scale pour afficher le bon nombre de chiffres après la virgule
 // - Gérer l'affichage de l'expression entière pour les fonctions
-- Gérer les fonctions restantes
-- Possibilité de changer l'opérateur actif
+// - Possibilité de changer l'opérateur actif
+// - Gérer les fonctions restantes
+- Position du fichier de configuration dans le .jar généré
