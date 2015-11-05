@@ -21,7 +21,7 @@ public class Modulo extends AOperation
 		BigDecimal left = new BigDecimal(leftOperand.toString());
 		BigDecimal right = new BigDecimal(rightOperand.toString());
 
-		return (new Number(left.remainder(right).toString()));
+		return (new Number(left.remainder(right)));
 	}
 
 	private Number executeInteger(Number leftOperand, Number rightOperand)
@@ -29,7 +29,7 @@ public class Modulo extends AOperation
 		BigInteger left = new BigInteger(leftOperand.toString());
 		BigInteger right = new BigInteger(rightOperand.toString());
 
-		return (new Number(left.remainder(right).toString()));
+		return (new Number(left.remainder(right)));
 	}
 
 	public String toString()

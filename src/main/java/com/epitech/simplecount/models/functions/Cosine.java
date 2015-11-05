@@ -25,6 +25,6 @@ public class Cosine extends AFunction
 
 	public String toString()
 	{
-		return ("cos");
+		return ("cos(x)");
 	}
 }

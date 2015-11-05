@@ -20,14 +20,14 @@ public class Cube extends AFunction
 	{
 		BigDecimal number = new BigDecimal(operand.toString());
 
-		return (new Number(number.pow(3).toString()));
+		return (new Number(number.pow(3)));
 	}
 
 	private Number executeInteger(Number operand)
 	{
 		BigInteger number = new BigInteger(operand.toString());
 
-		return (new Number(number.pow(3).toString()));
+		return (new Number(number.pow(3)));
 	}
 
 	public String toString()

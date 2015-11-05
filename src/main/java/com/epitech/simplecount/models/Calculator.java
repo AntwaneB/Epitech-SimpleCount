@@ -14,7 +14,7 @@ public class Calculator extends Observable
 
 	public void pushOperator(Token token)
 	{
-		if (expression.size() == 0 && history.getLast().getResult() != null)
+		if (expression.size() == 0 && history.size() > 0  && history.getLast().getResult() != null)
 			expression.pushNumber(history.getLast().getResult());
 
 		expression.pushOperator(token);
@@ -25,7 +25,7 @@ public class Calculator extends Observable
 
 	public void pushFunction(Token token)
 	{
-		if (expression.size() == 0 && history.getLast().getResult() != null)
+		if (expression.size() == 0 && history.size() > 0 && history.getLast().getResult() != null)
 			expression.pushNumber(history.getLast().getResult());
 
 		expression.pushFunction(token);

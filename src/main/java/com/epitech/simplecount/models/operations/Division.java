@@ -17,7 +17,7 @@ public class Division extends AOperation
 		BigDecimal left = new BigDecimal(leftOperand.toString());
 		BigDecimal right = new BigDecimal(rightOperand.toString());
 
-		return (new Number(left.divide(right).toString()));
+		return (new Number(left.divide(right, Settings.asInt("max_decimals") + 3, BigDecimal.ROUND_HALF_EVEN)));
 	}
 
 	public String toString()

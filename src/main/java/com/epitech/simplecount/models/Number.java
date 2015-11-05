@@ -23,16 +23,35 @@ public class Number extends AExpressionPart
 	{
 		this.type = Type.OPERAND;
 
-		for (char c : value.toCharArray())
-			this.pushToken(new Token(c));
+		this.buildFromString(value);
 	}
 
-	public Number(Number number)
+	public Number(Number value)
 	{
 		this.type = Type.OPERAND;
 
-		for (Token t: number.tokens)
+		for (Token t: value.tokens)
 			this.pushToken(t);
+	}
+
+	public Number(BigDecimal value)
+	{
+		this.type = Type.OPERAND;
+
+		this.buildFromString(value.toString());
+	}
+
+	public Number(BigInteger value)
+	{
+		this.type = Type.OPERAND;
+
+		this.buildFromString(value.toString());
+	}
+
+	private void buildFromString(String value)
+	{
+		for (char c : value.toCharArray())
+			this.pushToken(new Token(c));
 	}
 
 	public void pushToken(Token token)
@@ -70,13 +89,22 @@ public class Number extends AExpressionPart
 
 	public String getEpured()
 	{
-		String result = new BigDecimal(this.toString()).round(new MathContext(Settings.asInt("max_decimals") + 1, RoundingMode.HALF_EVEN)).toString();
+		BigDecimal value = new BigDecimal(this.toString());
 
-		if (this.decimal)
+		if (value.scale() > Settings.asInt("max_decimals"))
+			value = value.setScale(Settings.asInt("max_decimals"), RoundingMode.HALF_EVEN);
+
+		if (value.precision() - (value.scale() >= 0 ? value.scale() : 0) > Settings.asInt("max_decimals"))
+			value = value.round(new MathContext(Settings.asInt("max_decimals"), RoundingMode.HALF_EVEN));
+
+		String result = value.toString();
+
+		if (decimal)
 		{
 			while (result.length() > 1 && result.charAt(result.length() - 1) == '0')
 				result = result.substring(0, result.length() - 1);
 		}
+
 		if (result.charAt(result.length() - 1) == '.')
 			result = result.substring(0, result.length() - 1);
 

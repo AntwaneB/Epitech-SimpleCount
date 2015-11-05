@@ -1,5 +1,7 @@
 package com.epitech.simplecount.models;
 
+import com.epitech.simplecount.models.AExpressionPart.Type;
+
 import java.util.LinkedList;
 import java.util.Observable;
 
@@ -30,7 +32,7 @@ public class Expression extends Observable
 		{
 			expression.add(result);
 		}
-		if (expression.size() == 1 && expression.get(0).is(AExpressionPart.Type.OPERAND))
+		if (expression.size() == 1 && expression.get(0).is(Type.OPERAND))
 		{
 			expression.add(AOperation.Factory.make(token));
 		}
@@ -47,7 +49,7 @@ public class Expression extends Observable
 		{
 			expression.add(result);
 		}
-		if (expression.size() == 1 && expression.get(0).is(AExpressionPart.Type.OPERAND))
+		if (expression.size() == 1 && expression.get(0).is(Type.OPERAND))
 		{
 			expression.add(AFunction.Factory.make(token));
 		}
@@ -60,14 +62,14 @@ public class Expression extends Observable
 
 	public void pushNumber(Token token)
 	{
-		if (expression.size() == 0 || expression.get(expression.size() - 1).is(AExpressionPart.Type.OPERATION))
+		if (expression.size() == 0 || expression.get(expression.size() - 1).is(Type.OPERATION))
 		{
 			Number number = new Number();
 			number.pushToken(token);
 
 			expression.add(number);
 		}
-		else if (expression.get(expression.size() - 1).is(AExpressionPart.Type.OPERAND))
+		else if (expression.get(expression.size() - 1).is(Type.OPERAND))
 		{
 			Number number = (Number)(expression.get(expression.size() - 1));
 			number.pushToken(token);
@@ -81,7 +83,7 @@ public class Expression extends Observable
 
 	public void pushNumber(Number number)
 	{
-		if (expression.size() == 0 || expression.getLast().is(AExpressionPart.Type.OPERATION))
+		if (expression.size() == 0 || expression.getLast().is(Type.OPERATION))
 		{
 			expression.add(new Number(number));
 		}
@@ -97,29 +99,18 @@ public class Expression extends Observable
 		boolean success = false;
 
 		if (expression.size() == 3
-			&& expression.get(0).is(AExpressionPart.Type.OPERAND)
-			&& expression.get(1).is(AExpressionPart.Type.OPERATION)
-			&& expression.get(2).is(AExpressionPart.Type.OPERAND))
+			&& expression.get(0).is(Type.OPERAND)
+			&& expression.get(1).is(Type.OPERATION)
+			&& expression.get(2).is(Type.OPERAND))
 		{
-			Number leftOperand = (Number)expression.get(0);
-			Number rightOperand = (Number)expression.get(2);
-
-			IOperation operation = (AOperation)expression.get(1);
-
-			result = operation.execute(leftOperand, rightOperand);
-
+			this.computeOperation();
 			success = true;
 		}
 		else if (expression.size() == 2
-				&& expression.get(0).is(AExpressionPart.Type.OPERAND)
-				&& expression.get(1).is(AExpressionPart.Type.FUNCTION))
+				&& expression.get(0).is(Type.OPERAND)
+				&& expression.get(1).is(Type.FUNCTION))
 		{
-			Number operand = (Number)expression.get(0);
-
-			IFunction function = (AFunction)expression.get(1);
-
-			result = function.execute(operand);
-
+			this.computeFunction();
 			success = true;
 		}
 
@@ -127,6 +118,25 @@ public class Expression extends Observable
 		this.notifyObservers();
 
 		return (success);
+	}
+
+	private void computeFunction()
+	{
+		Number operand = (Number)expression.get(0);
+
+		IFunction function = (AFunction)expression.get(1);
+
+		result = function.execute(operand);
+	}
+
+	private void computeOperation()
+	{
+		Number leftOperand = (Number)expression.get(0);
+		Number rightOperand = (Number)expression.get(2);
+
+		IOperation operation = (AOperation)expression.get(1);
+
+		result = operation.execute(leftOperand, rightOperand);
 	}
 
 	public int size()
@@ -156,13 +166,21 @@ public class Expression extends Observable
 
 		if (expression.size() > 1)
 		{
-			for (AExpressionPart part : expression)
+			if (expression.size() == 2 && expression.get(1).is(Type.FUNCTION))
 			{
-				if (part instanceof Number)
-					str += ((Number)(part)).getEpured() + " ";
-				else
-					str += part.toString() + " ";
+				str += expression.get(1).toString().replaceFirst("x", expression.get(0).toString());
 			}
+			else
+			{
+				for (AExpressionPart part : expression)
+				{
+					if (part instanceof Number)
+						str += ((Number)(part)).getEpured() + " ";
+					else
+						str += part.toString() + " ";
+				}
+			}
+
 		}
 
 		return (str);

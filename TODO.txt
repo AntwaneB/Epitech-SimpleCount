@@ -1,4 +1,7 @@
 // - BigDecimal.round() transforme le chiffre en puissance sous la forme x*10^y > Exception car le "E" des puissances n'est pas géré comme Token
 // - Gérer l'affichage des nombres qui dépassent de l'affichage s'ils sont trop grands
 // - Afficher l'expression entière au dessus du nombre actuel
+// - Constructor de Number avec un BigDecimal
+// - Mix round et scale pour afficher le bon nombre de chiffres après la virgule
 - Gérer les fonctions restantes
+- Gérer l'affichage de l'expression entière pour les fonctions

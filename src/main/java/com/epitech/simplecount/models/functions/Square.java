@@ -20,14 +20,14 @@ public class Square extends AFunction
 	{
 		BigDecimal number = new BigDecimal(operand.toString());
 
-		return (new Number(number.pow(2).toString()));
+		return (new Number(number.pow(2)));
 	}
 
 	private Number executeInteger(Number operand)
 	{
 		BigInteger number = new BigInteger(operand.toString());
 
-		return (new Number(number.pow(2).toString()));
+		return (new Number(number.pow(2)));
 	}
 
 	public String toString()

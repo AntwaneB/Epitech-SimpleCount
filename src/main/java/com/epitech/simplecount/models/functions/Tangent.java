@@ -25,6 +25,6 @@ public class Tangent extends AFunction
 
 	public String toString()
 	{
-		return ("tan");
+		return ("tan(x)");
 	}
 }

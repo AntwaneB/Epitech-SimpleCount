@@ -25,6 +25,6 @@ public class Sine extends AFunction
 
 	public String toString()
 	{
-		return ("sin");
+		return ("sin(x)");
 	}
 }

@@ -2,25 +2,22 @@ package com.epitech.simplecount.models.functions;
 
 import com.epitech.simplecount.models.*;
 import com.epitech.simplecount.models.Number;
+import utils.BigDecimalUtils;
+
+import java.math.BigDecimal;
 
 public class Exponential extends AFunction
 {
 	public Number execute(Number operand)
 	{
-		if (operand.isDecimal())
-			return (this.executeDecimal(operand));
-		else
-			return (this.executeInteger(operand));
+		return (this.executeDecimal(operand));
 	}
 
 	private Number executeDecimal(Number operand)
 	{
-		return (new Number("0"));
-	}
+		BigDecimal result = BigDecimalUtils.exp(new BigDecimal(operand.toString()), Settings.asInt("max_decimals") + 3);
 
-	private Number executeInteger(Number operand)
-	{
-		return (new Number("0"));
+		return (new Number(result));
 	}
 
 	public String toString()

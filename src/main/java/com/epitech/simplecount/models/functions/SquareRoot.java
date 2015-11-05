@@ -28,6 +28,6 @@ public class SquareRoot extends AFunction
 
 	public String toString()
 	{
-		return ("\u221A");
+		return ("\u221Ax");
 	}
 }
