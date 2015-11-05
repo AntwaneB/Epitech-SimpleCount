@@ -65,7 +65,7 @@ public class CalculatorView extends JFrame implements Observer
 
 		JPanel mainPanel = new JPanel(new GridBagLayout());
 		mainPanel.setBackground(new Color(Settings.asInt("application_background", 16)));
-		mainPanel.setPreferredSize(new Dimension(Settings.asInt("application_width"), Settings.asInt("application_height") - 28));
+		mainPanel.setPreferredSize(new Dimension(Settings.asInt("application_width"), Settings.asInt("application_height") - 31));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
@@ -125,10 +125,22 @@ public class CalculatorView extends JFrame implements Observer
 
 	private Component makeResultPanel()
 	{
-		JPanel panel = new JPanel(new GridLayout(1, 1));
+		JPanel panel = new JPanel(new GridBagLayout());
 		panel.setBackground(new Color(Settings.asInt("result_background", 16)));
 
-		panel.add(TextFieldView.Factory.make(this.model));
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.weightx = 1;
+
+		gbc.weighty = 0.8;
+		panel.add(TextFieldView.Factory.make(this.model, gbc, 0, 1), gbc);
+
+		TextFieldView.Factory.fontSize = 12;
+		TextFieldView.Factory.background = new Color(Settings.asInt("expression_background", 16));
+		TextFieldView.Factory.foreground = new Color(Settings.asInt("expression_foreground", 16));
+		gbc.weighty = 0.2;
+		panel.add(TextFieldView.Factory.make(this.model.getExpression(), gbc, 0, 0), gbc);
+		TextFieldView.Factory.reset();
 
 		return (panel);
 	}

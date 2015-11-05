@@ -40,11 +40,14 @@ public class TextFieldView extends JTextField implements Observer
 	}
 
 	private Observable model;
+	private int baseFontSize;
 
 	public TextFieldView(Observable model, int fontSize, Color background, Color foreground)
 	{
 		this.model = model;
 		this.model.addObserver(this);
+
+		this.baseFontSize = fontSize;
 
 		this.setText(this.model.toString());
 		this.setStyle(fontSize, background, foreground);
@@ -66,8 +69,8 @@ public class TextFieldView extends JTextField implements Observer
 		this.setText(newText);
 
 		if (newText.length() > 8)
-			this.setFont(new Font("Arial", Font.PLAIN, 40 - (newText.length() > 28 ? 28 : newText.length())));
-		else if (this.getFont().getSize() < 40)
-			this.setFont(new Font("Arial", Font.PLAIN, 40 - newText.length()));
+			this.setFont(new Font("Arial", Font.PLAIN, this.baseFontSize - (newText.length() > 28 ? 28 : newText.length())));
+		else if (this.getFont().getSize() < this.baseFontSize)
+			this.setFont(new Font("Arial", Font.PLAIN, this.baseFontSize));
 	}
 }

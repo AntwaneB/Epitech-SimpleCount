@@ -1,19 +1,12 @@
 package com.epitech.simplecount.models;
 
-import com.epitech.simplecount.models.AExpressionPart.Type;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Observable;
 
 public class Calculator extends Observable
 {
-	private List<ArrayList<AExpressionPart>> history = new LinkedList<ArrayList<AExpressionPart>>();
-	private List<AExpressionPart> expression = new ArrayList<AExpressionPart>();
-
-	private Number result = null;
-
+	private LinkedList<Expression> history = new LinkedList<Expression>();
+	private Expression expression = new Expression();
 
 	public Calculator()
 	{
@@ -21,16 +14,10 @@ public class Calculator extends Observable
 
 	public void pushOperator(Token token)
 	{
-		if (expression.size() == 0 && result != null)
-		{
-			expression.add(result);
-		}
-		if (expression.size() == 1 && expression.get(0).is(Type.OPERAND))
-		{
-			expression.add(AOperation.Factory.make(token));
-		}
+		if (expression.size() == 0 && history.getLast().getResult() != null)
+			expression.pushNumber(history.getLast().getResult());
 
-		result = null;
+		expression.pushOperator(token);
 
 		this.setChanged();
 		this.notifyObservers();
@@ -38,16 +25,10 @@ public class Calculator extends Observable
 
 	public void pushFunction(Token token)
 	{
-		if (expression.size() == 0 && result != null)
-		{
-			expression.add(result);
-		}
-		if (expression.size() == 1 && expression.get(0).is(Type.OPERAND))
-		{
-			expression.add(AFunction.Factory.make(token));
-		}
+		if (expression.size() == 0 && history.getLast().getResult() != null)
+			expression.pushNumber(history.getLast().getResult());
 
-		result = null;
+		expression.pushFunction(token);
 
 		this.setChanged();
 		this.notifyObservers();
@@ -55,20 +36,7 @@ public class Calculator extends Observable
 
 	public void pushNumber(Token token)
 	{
-		if (expression.size() == 0 || expression.get(expression.size() - 1).is(Type.OPERATION))
-		{
-			Number number = new Number();
-			number.pushToken(token);
-
-			expression.add(number);
-		}
-		else if (expression.get(expression.size() - 1).is(Type.OPERAND))
-		{
-			Number number = (Number)(expression.get(expression.size() - 1));
-			number.pushToken(token);
-		}
-
-		result = null;
+		expression.pushNumber(token);
 
 		this.setChanged();
 		this.notifyObservers();
@@ -76,32 +44,9 @@ public class Calculator extends Observable
 
 	public void compute()
 	{
-		if (expression.size() == 3
-			&& expression.get(0).is(Type.OPERAND)
-			&& expression.get(1).is(Type.OPERATION)
-			&& expression.get(2).is(Type.OPERAND))
+		if (expression.compute())
 		{
-			Number leftOperand = (Number)expression.get(0);
-			Number rightOperand = (Number)expression.get(2);
-
-			IOperation operation = (AOperation)expression.get(1);
-
-			result = operation.execute(leftOperand, rightOperand);
-
-			history.add(new ArrayList<>(expression));
-			expression.clear();
-		}
-		else if (expression.size() == 2
-				&& expression.get(0).is(Type.OPERAND)
-				&& expression.get(1).is(Type.FUNCTION))
-		{
-			Number operand = (Number)expression.get(0);
-
-			IFunction function = (AFunction)expression.get(1);
-
-			result = function.execute(operand);
-
-			history.add(new ArrayList<>(expression));
+			history.add(new Expression(expression));
 			expression.clear();
 		}
 
@@ -111,12 +56,14 @@ public class Calculator extends Observable
 
 	public String toString()
 	{
-		if (result != null)
-			return (result.epur().toString());
-
-		if (expression.size() != 0)
-			return (expression.get(expression.size() - 1).toString());
+		if (expression.size() == 0 && history.size() != 0)
+			return (history.getLast().currentElementToString());
 		else
-			return ("0");
+			return (expression.currentElementToString());
+	}
+
+	public Expression getExpression()
+	{
+		return (expression);
 	}
 }
