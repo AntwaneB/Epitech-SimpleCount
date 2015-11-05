@@ -5,7 +5,7 @@ import java.util.Observable;
 
 public class Calculator extends Observable
 {
-	private LinkedList<Expression> history = new LinkedList<Expression>();
+	private LinkedList<Expression> history = new LinkedList<>();
 	private Expression expression = new Expression();
 
 	public Calculator()

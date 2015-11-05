@@ -47,8 +47,10 @@ public class Token
 		tokens.put("8", Tokens.EIGHT);
 		tokens.put("9", Tokens.NINE);
 		tokens.put(".", Tokens.DOT);
-		tokens.put("+", Tokens.PLUS);
+
 		tokens.put("-", Tokens.MINUS);
+
+		tokens.put("+", Tokens.PLUS);
 		tokens.put("*", Tokens.MULT);
 		tokens.put("/", Tokens.DIV);
 		tokens.put("%", Tokens.MOD);
@@ -106,4 +108,10 @@ public class Token
 	{
 		return (this.value == token);
 	}
+
+	public static boolean isValidToken(String value)
+	{
+		return (Token.tokens.containsKey(value));
+	}
+
 }

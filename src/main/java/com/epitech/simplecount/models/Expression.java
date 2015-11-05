@@ -29,13 +29,13 @@ public class Expression extends Observable
 	public void pushOperator(Token token)
 	{
 		if (expression.size() == 0 && result != null)
-		{
 			expression.add(result);
-		}
+
+		if (expression.size() == 2 && expression.get(1).is(Type.OPERATION))
+			expression.remove(1);
+
 		if (expression.size() == 1 && expression.get(0).is(Type.OPERAND))
-		{
 			expression.add(AOperation.Factory.make(token));
-		}
 
 		result = null;
 

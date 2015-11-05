@@ -2,12 +2,9 @@ package com.epitech.simplecount.controllers;
 
 import com.epitech.simplecount.models.Calculator;
 import com.epitech.simplecount.models.Token;
-import com.epitech.simplecount.models.Token.Tokens;
-import com.epitech.simplecount.views.ButtonView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
 
 public class ButtonController implements ActionListener
 {
@@ -21,7 +18,8 @@ public class ButtonController implements ActionListener
 	public void actionPerformed(ActionEvent event)
 	{
 		try {
-			if (event.getID() == ActionEvent.ACTION_PERFORMED) {
+			if (event.getID() == ActionEvent.ACTION_PERFORMED && Token.isValidToken(event.getActionCommand()))
+			{
 				Token token = new Token(event.getActionCommand());
 
 				switch (token.getValue()) {

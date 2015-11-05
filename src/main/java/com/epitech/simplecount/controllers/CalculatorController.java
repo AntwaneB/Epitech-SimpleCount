@@ -5,7 +5,6 @@ import com.epitech.simplecount.views.CalculatorView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
 
 public class CalculatorController implements ActionListener
 {
