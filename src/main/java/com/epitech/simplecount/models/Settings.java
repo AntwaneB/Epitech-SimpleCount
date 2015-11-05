@@ -13,7 +13,7 @@ public class Settings
 	{
 		try
 		{
-			properties.load(new FileInputStream("src/main/resources/config.properties"));
+			properties.load(this.getClass().getResourceAsStream("/config.properties"));
 		} catch (IOException e)
 		{
 			System.out.println("Error occurred: " + e.toString());
