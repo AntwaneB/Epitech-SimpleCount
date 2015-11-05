@@ -1,6 +1,5 @@
 package com.epitech.simplecount.models;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -13,7 +12,7 @@ public class Settings
 	{
 		try
 		{
-			properties.load(this.getClass().getResourceAsStream("/config.properties"));
+			properties.load(this.getClass().getResourceAsStream("/application.properties"));
 		} catch (IOException e)
 		{
 			System.out.println("Error occurred: " + e.toString());
