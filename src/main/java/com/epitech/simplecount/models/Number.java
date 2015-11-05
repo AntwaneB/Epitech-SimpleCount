@@ -68,7 +68,7 @@ public class Number extends AExpressionPart
 		return (strValue);
 	}
 
-	public String epur()
+	public String getEpured()
 	{
 		String result = new BigDecimal(this.toString()).round(new MathContext(Settings.asInt("max_decimals") + 1, RoundingMode.HALF_EVEN)).toString();
 

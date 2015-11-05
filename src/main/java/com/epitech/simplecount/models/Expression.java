@@ -142,7 +142,7 @@ public class Expression extends Observable
 	public String currentElementToString()
 	{
 		if (result != null)
-			return (result.epur().toString());
+			return (result.getEpured());
 
 		if (expression.size() != 0)
 			return (expression.getLast().toString());
@@ -159,7 +159,7 @@ public class Expression extends Observable
 			for (AExpressionPart part : expression)
 			{
 				if (part instanceof Number)
-					str += ((Number)(part)).epur().toString() + " ";
+					str += ((Number)(part)).getEpured() + " ";
 				else
 					str += part.toString() + " ";
 			}
