@@ -2,7 +2,7 @@ package com.epitech.simplecount.models;
 
 import java.util.Observable;
 
-public class AExpressionPart extends Observable
+public abstract class AExpressionPart extends Observable
 {
 	public enum Type
 	{

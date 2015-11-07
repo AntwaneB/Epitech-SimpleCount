@@ -31,7 +31,8 @@ public class Expression extends Observable
 		if (expression.size() == 0 && result != null)
 			expression.add(result);
 
-		if (expression.size() == 2 && expression.get(1).is(Type.OPERATION))
+		if (expression.size() == 2
+			&& (expression.get(1).is(Type.FUNCTION) || expression.get(1).is(Type.OPERATION)))
 			expression.remove(1);
 
 		if (expression.size() == 1 && expression.get(0).is(Type.OPERAND))
@@ -46,13 +47,14 @@ public class Expression extends Observable
 	public void pushFunction(Token token)
 	{
 		if (expression.size() == 0 && result != null)
-		{
 			expression.add(result);
-		}
+
+		if (expression.size() == 2
+			&& (expression.get(1).is(Type.FUNCTION) || expression.get(1).is(Type.OPERATION)))
+			expression.remove(1);
+
 		if (expression.size() == 1 && expression.get(0).is(Type.OPERAND))
-		{
 			expression.add(AFunction.Factory.make(token));
-		}
 
 		result = null;
 

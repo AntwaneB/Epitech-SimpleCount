@@ -7,5 +7,5 @@
 // - Possibilité de changer l'opérateur actif
 // - Gérer les fonctions restantes
 // - Position du fichier de configuration dans le .jar généré
+// - Changer la fonction active
 - PanelView
-- Changer la fonction active
