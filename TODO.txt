@@ -8,4 +8,6 @@
 // - Gérer les fonctions restantes
 // - Position du fichier de configuration dans le .jar généré
 // - Changer la fonction active
+// - Bug chiffres trop longs dans l'affichage de l'historique pour une fonction
+// - Utiliser les nouveaux controllers
 - PanelView

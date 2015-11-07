@@ -6,6 +6,8 @@ import com.epitech.simplecount.models.Settings;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.lang.reflect.Constructor;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,6 +20,7 @@ public class ButtonView extends JButton implements Observer
 		public static Color hover;
 		public static Color focus;
 		public static int fontSize;
+		public static Class<?> controllerClass;
 		static {
 			Factory.reset();
 		}
@@ -25,7 +28,23 @@ public class ButtonView extends JButton implements Observer
 		public static ButtonView make(String text, Calculator model)
 		{
 			ButtonView button = new ButtonView(text, Factory.fontSize, Factory.background, Factory.foreground, Factory.hover, Factory.focus);
-			button.addActionListener(new ButtonController(model));
+
+			if (Factory.controllerClass != null)
+			{
+				try {
+					Constructor<?> ctor = Factory.controllerClass.getConstructor(Calculator.class);
+					Object controller = ctor.newInstance(new Object[] { model });
+
+					if (controller instanceof ActionListener)
+						button.addActionListener((ActionListener)controller);
+					else
+						throw new RuntimeException("Invalid controller");
+				}
+				catch (Exception e)
+				{
+					System.out.println("Error while binding button to controller: " + e.toString());
+				}
+			}
 
 			return (button);
 		}
@@ -45,6 +64,7 @@ public class ButtonView extends JButton implements Observer
 			Factory.hover = null;
 			Factory.focus = null;
 			Factory.fontSize = 25;
+			Factory.controllerClass = null;
 		}
 	}
 

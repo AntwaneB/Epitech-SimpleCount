@@ -1,6 +1,6 @@
 package com.epitech.simplecount.views;
 
-import com.epitech.simplecount.controllers.ButtonController;
+import com.epitech.simplecount.controllers.*;
 import com.epitech.simplecount.models.Calculator;
 import com.epitech.simplecount.models.Settings;
 
@@ -104,6 +104,7 @@ public class CalculatorView extends JFrame implements Observer
 		gbc.weightx = 0.25;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
+		ButtonView.Factory.controllerClass = NumberController.class;
 		mainPanel.add(makeButtonPanel("7", this.model, gbc, 0, 2), gbc);
 		mainPanel.add(makeButtonPanel("8", this.model, gbc, 1, 2), gbc);
 		mainPanel.add(makeButtonPanel("9", this.model, gbc, 2, 2), gbc);
@@ -119,6 +120,7 @@ public class CalculatorView extends JFrame implements Observer
 		mainPanel.add(makeButtonPanel(".", this.model, gbc, 2, 5), gbc);
 		gbc.gridwidth = 2;
 		mainPanel.add(makeButtonPanel("0", this.model, gbc, 0, 5), gbc);
+		ButtonView.Factory.reset();
 
 		this.add(mainPanel);
 	}
@@ -155,6 +157,8 @@ public class CalculatorView extends JFrame implements Observer
 		ButtonView.Factory.hover = new Color(Settings.asInt("submit_hover", 16));
 		ButtonView.Factory.focus = new Color(Settings.asInt("submit_focus", 16));
 
+		ButtonView.Factory.controllerClass = SubmitController.class;
+
 		panel.add(ButtonView.Factory.make("=", this.model));
 
 		ButtonView.Factory.reset();
@@ -166,6 +170,8 @@ public class CalculatorView extends JFrame implements Observer
 	{
 		ButtonView.Factory.background = new Color(Settings.asInt("controls_background", 16));
 		ButtonView.Factory.foreground = new Color(Settings.asInt("controls_foreground", 16));
+
+		ButtonView.Factory.controllerClass = OperationsController.class;
 
 		mainPanel.add(makeButtonPanel("+", this.model, gbc, 3, 1), gbc);
 		mainPanel.add(makeButtonPanel("-", this.model, gbc, 3, 2), gbc);
@@ -180,11 +186,13 @@ public class CalculatorView extends JFrame implements Observer
 	{
 		ButtonView.Factory.background = new Color(Settings.asInt("functions_background", 16));
 		ButtonView.Factory.foreground = new Color(Settings.asInt("functions_foreground", 16));
+		ButtonView.Factory.fontSize = 12;
+
+		ButtonView.Factory.controllerClass = FunctionsController.class;
 
 		JPanel panel = new JPanel(new GridLayout(2, 4));
 		panel.setBackground(ButtonView.Factory.background);
 
-		ButtonView.Factory.fontSize = 12;
 		panel.add(ButtonView.Factory.make("<html>x<sup>2</sup></html>", this.model));
 		panel.add(ButtonView.Factory.make("<html>x<sup>3</sup></html>", this.model));
 		panel.add(ButtonView.Factory.make("\u221A", this.model));

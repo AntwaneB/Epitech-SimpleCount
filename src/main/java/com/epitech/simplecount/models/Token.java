@@ -17,6 +17,7 @@ public class Token
 		EIGHT,
 		NINE,
 		DOT,
+
 		PLUS,
 		MINUS,
 		MULT,

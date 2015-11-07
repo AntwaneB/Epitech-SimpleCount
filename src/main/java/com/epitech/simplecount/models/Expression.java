@@ -170,7 +170,10 @@ public class Expression extends Observable
 		{
 			if (expression.size() == 2 && expression.get(1).is(Type.FUNCTION))
 			{
-				str += expression.get(1).toString().replaceFirst("x", expression.get(0).toString());
+				if (expression.get(0) instanceof Number)
+					str += expression.get(1).toString().replaceFirst("x", ((Number)(expression.get(0))).getEpured().toString());
+				else
+					str += expression.get(1).toString().replaceFirst("x", expression.get(0).toString());
 			}
 			else
 			{
