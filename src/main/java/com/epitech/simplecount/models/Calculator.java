@@ -1,13 +1,7 @@
 package com.epitech.simplecount.models;
 
-import java.util.LinkedList;
-import java.util.Observable;
-
-public class Calculator extends Observable
+public class Calculator extends ACalculator
 {
-	private LinkedList<Expression> history = new LinkedList<>();
-	private Expression expression = new Expression();
-
 	public Calculator()
 	{
 	}
