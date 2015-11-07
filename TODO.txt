@@ -8,3 +8,4 @@
 // - Gérer les fonctions restantes
 // - Position du fichier de configuration dans le .jar généré
 - PanelView
+- Changer la fonction active

@@ -150,7 +150,14 @@ public class CalculatorView extends JFrame implements Observer
 	{
 		JPanel panel = new JPanel(new GridLayout(1, 1));
 
-		panel.add(SubmitView.Factory.make("=", this.model));
+		ButtonView.Factory.background = new Color(Settings.asInt("submit_background", 16));
+		ButtonView.Factory.foreground = new Color(Settings.asInt("submit_foreground", 16));
+		ButtonView.Factory.hover = new Color(Settings.asInt("submit_hover", 16));
+		ButtonView.Factory.focus = new Color(Settings.asInt("submit_focus", 16));
+
+		panel.add(ButtonView.Factory.make("=", this.model));
+
+		ButtonView.Factory.reset();
 
 		return (panel);
 	}
