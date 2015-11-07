@@ -1,6 +1,5 @@
 package com.epitech.simplecount.models;
 
-import java.io.IOException;
 import java.util.Properties;
 
 public class Settings
@@ -13,9 +12,11 @@ public class Settings
 		try
 		{
 			properties.load(this.getClass().getResourceAsStream("/application.properties"));
-		} catch (IOException e)
+		}
+		catch (Exception e)
 		{
-			System.out.println("Error occurred: " + e.toString());
+			System.out.println("Error occurred while loading configuration files: " + e.toString());
+			System.exit(-1);
 		}
 	}
 
