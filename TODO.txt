@@ -11,3 +11,4 @@
 // - Bug chiffres trop longs dans l'affichage de l'historique pour une fonction
 // - Utiliser les nouveaux controllers
 - PanelView
+- Gérer division et modulo par zéro
