@@ -9,6 +9,9 @@ public class Division extends AOperation
 {
 	public com.epitech.simplecount.models.Number execute(Number leftOperand, Number rightOperand)
 	{
+		if (new BigDecimal(rightOperand.toString()).compareTo(BigDecimal.ZERO) == 0)
+			throw new RuntimeException("Trying to divide by zero");
+
 		return (this.executeDecimal(leftOperand, rightOperand));
 	}
 

@@ -10,6 +10,9 @@ public class Modulo extends AOperation
 {
 	public com.epitech.simplecount.models.Number execute(Number leftOperand, Number rightOperand)
 	{
+		if (new BigDecimal(rightOperand.toString()).compareTo(BigDecimal.ZERO) == 0)
+			throw new RuntimeException("Trying to divide by zero");
+
 		if (leftOperand.isDecimal() || rightOperand.isDecimal())
 			return (this.executeDecimal(leftOperand, rightOperand));
 		else

@@ -105,15 +105,13 @@ public class Expression extends Observable
 			&& expression.get(1).is(Type.OPERATION)
 			&& expression.get(2).is(Type.OPERAND))
 		{
-			this.computeOperation();
-			success = true;
+			success = this.computeOperation();
 		}
 		else if (expression.size() == 2
 				&& expression.get(0).is(Type.OPERAND)
 				&& expression.get(1).is(Type.FUNCTION))
 		{
-			this.computeFunction();
-			success = true;
+			success = this.computeFunction();
 		}
 
 		this.setChanged();
@@ -122,23 +120,39 @@ public class Expression extends Observable
 		return (success);
 	}
 
-	private void computeFunction()
+	private boolean computeFunction()
 	{
 		Number operand = (Number)expression.get(0);
 
 		IFunction function = (AFunction)expression.get(1);
 
-		result = function.execute(operand);
+		try
+		{
+			result = function.execute(operand);
+		}
+		catch (RuntimeException e)
+		{
+			return (false);
+		}
+		return (true);
 	}
 
-	private void computeOperation()
+	private boolean computeOperation()
 	{
 		Number leftOperand = (Number)expression.get(0);
 		Number rightOperand = (Number)expression.get(2);
 
 		IOperation operation = (AOperation)expression.get(1);
 
-		result = operation.execute(leftOperand, rightOperand);
+		try
+		{
+			result = operation.execute(leftOperand, rightOperand);
+		}
+		catch (RuntimeException e)
+		{
+			return (false);
+		}
+		return (true);
 	}
 
 	public int size()
