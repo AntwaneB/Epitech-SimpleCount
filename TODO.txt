@@ -12,3 +12,9 @@
 // - Utiliser les nouveaux controllers
 // - Gérer division et modulo par zéro
 - PanelView
+- Classe perso d'exceptions
+
+Documentation :
+- UML
+- Explication du code (design patern)
+- Commentaires de doc auto (Java Doc)

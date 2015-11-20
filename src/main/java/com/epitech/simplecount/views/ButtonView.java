@@ -1,6 +1,5 @@
 package com.epitech.simplecount.views;
 
-import com.epitech.simplecount.controllers.ButtonController;
 import com.epitech.simplecount.models.Calculator;
 import com.epitech.simplecount.models.Settings;
 
